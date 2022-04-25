@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="ActorSet" EntityType="Model1.Store.ActorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DirectorSet" EntityType="Model1.Store.DirectorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MovieSet" EntityType="Model1.Store.MovieSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActorUploadedFilesSet" EntityType="Model1.Store.ActorUploadedFilesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DirectorUploadedFilesSet" EntityType="Model1.Store.DirectorUploadedFilesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MovieUploadedFilesSet" EntityType="Model1.Store.MovieUploadedFilesSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ActorMovie" Association="Model1.Store.ActorMovie">
+      <End Role="Actor" EntitySet="ActorSet" />
+      <End Role="Movie" EntitySet="MovieSet" />
+    </AssociationSet>
+    <AssociationSet Name="DirectorMovie" Association="Model1.Store.DirectorMovie">
+      <End Role="Director" EntitySet="DirectorSet" />
+      <End Role="Movie" EntitySet="MovieSet" />
+    </AssociationSet>
+    <AssociationSet Name="ActorActorUploadedFiles" Association="Model1.Store.ActorActorUploadedFiles">
+      <End Role="Actor" EntitySet="ActorSet" />
+      <End Role="ActorUploadedFiles" EntitySet="ActorUploadedFilesSet" />
+    </AssociationSet>
+    <AssociationSet Name="DirectorDirectorUploadedFiles" Association="Model1.Store.DirectorDirectorUploadedFiles">
+      <End Role="Director" EntitySet="DirectorSet" />
+      <End Role="DirectorUploadedFiles" EntitySet="DirectorUploadedFilesSet" />
+    </AssociationSet>
+    <AssociationSet Name="MovieMovieUploadedFiles" Association="Model1.Store.MovieMovieUploadedFiles">
+      <End Role="Movie" EntitySet="MovieSet" />
+      <End Role="MovieUploadedFiles" EntitySet="MovieUploadedFilesSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ActorSet">
+    <Key>
+      <PropertyRef Name="IDActor" />
+    </Key>
+    <Property Name="IDActor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DirectorSet">
+    <Key>
+      <PropertyRef Name="IDDirector" />
+    </Key>
+    <Property Name="IDDirector" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MovieSet">
+    <Key>
+      <PropertyRef Name="IDMovie" />
+    </Key>
+    <Property Name="IDMovie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Release" Type="int" Nullable="false" />
+    <Property Name="ActorIDActor" Type="int" Nullable="false" />
+    <Property Name="DirectorIDDirector" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ActorUploadedFilesSet">
+    <Key>
+      <PropertyRef Name="IDActorUploadedFiles" />
+    </Key>
+    <Property Name="IDActorUploadedFiles" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ActorIDActor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DirectorUploadedFilesSet">
+    <Key>
+      <PropertyRef Name="IDDirectorUploadedFiles" />
+    </Key>
+    <Property Name="IDDirectorUploadedFiles" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="DirectorIDDirector" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MovieUploadedFilesSet">
+    <Key>
+      <PropertyRef Name="IDMovieUploadedFiles" />
+    </Key>
+    <Property Name="IDMovieUploadedFiles" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="MovieIDMovie" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ActorMovie">
+    <End Role="Actor" Type="Model1.Store.ActorSet" Multiplicity="1" />
+    <End Role="Movie" Type="Model1.Store.MovieSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="IDActor" />
+      </Principal>
+      <Dependent Role="Movie">
+        <PropertyRef Name="ActorIDActor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DirectorMovie">
+    <End Role="Director" Type="Model1.Store.DirectorSet" Multiplicity="1" />
+    <End Role="Movie" Type="Model1.Store.MovieSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Director">
+        <PropertyRef Name="IDDirector" />
+      </Principal>
+      <Dependent Role="Movie">
+        <PropertyRef Name="DirectorIDDirector" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActorActorUploadedFiles">
+    <End Role="Actor" Type="Model1.Store.ActorSet" Multiplicity="1" />
+    <End Role="ActorUploadedFiles" Type="Model1.Store.ActorUploadedFilesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="IDActor" />
+      </Principal>
+      <Dependent Role="ActorUploadedFiles">
+        <PropertyRef Name="ActorIDActor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DirectorDirectorUploadedFiles">
+    <End Role="Director" Type="Model1.Store.DirectorSet" Multiplicity="1" />
+    <End Role="DirectorUploadedFiles" Type="Model1.Store.DirectorUploadedFilesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Director">
+        <PropertyRef Name="IDDirector" />
+      </Principal>
+      <Dependent Role="DirectorUploadedFiles">
+        <PropertyRef Name="DirectorIDDirector" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MovieMovieUploadedFiles">
+    <End Role="Movie" Type="Model1.Store.MovieSet" Multiplicity="1" />
+    <End Role="MovieUploadedFiles" Type="Model1.Store.MovieUploadedFilesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="IDMovie" />
+      </Principal>
+      <Dependent Role="MovieUploadedFiles">
+        <PropertyRef Name="MovieIDMovie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActorSet" EntityType="Model1.Actor" />
+          <EntitySet Name="DirectorSet" EntityType="Model1.Director" />
+          <EntitySet Name="MovieSet" EntityType="Model1.Movie" />
+          <EntitySet Name="ActorUploadedFilesSet" EntityType="Model1.ActorUploadedFiles" />
+          <EntitySet Name="DirectorUploadedFilesSet" EntityType="Model1.DirectorUploadedFiles" />
+          <EntitySet Name="MovieUploadedFilesSet" EntityType="Model1.MovieUploadedFiles" />
+          <AssociationSet Name="ActorMovie" Association="Model1.ActorMovie">
+            <End Role="Actor" EntitySet="ActorSet" />
+            <End Role="Movie" EntitySet="MovieSet" />
+          </AssociationSet>
+          <AssociationSet Name="DirectorMovie" Association="Model1.DirectorMovie">
+            <End Role="Director" EntitySet="DirectorSet" />
+            <End Role="Movie" EntitySet="MovieSet" />
+          </AssociationSet>
+          <AssociationSet Name="ActorActorUploadedFiles" Association="Model1.ActorActorUploadedFiles">
+            <End Role="Actor" EntitySet="ActorSet" />
+            <End Role="ActorUploadedFiles" EntitySet="ActorUploadedFilesSet" />
+          </AssociationSet>
+          <AssociationSet Name="DirectorDirectorUploadedFiles" Association="Model1.DirectorDirectorUploadedFiles">
+            <End Role="Director" EntitySet="DirectorSet" />
+            <End Role="DirectorUploadedFiles" EntitySet="DirectorUploadedFilesSet" />
+          </AssociationSet>
+          <AssociationSet Name="MovieMovieUploadedFiles" Association="Model1.MovieMovieUploadedFiles">
+            <End Role="Movie" EntitySet="MovieSet" />
+            <End Role="MovieUploadedFiles" EntitySet="MovieUploadedFilesSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Actor">
+          <Key>
+            <PropertyRef Name="IDActor" />
+          </Key>
+          <Property Name="IDActor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" Nullable="false" />
+          <NavigationProperty Name="Movie" Relationship="Model1.ActorMovie" FromRole="Actor" ToRole="Movie" />
+          <NavigationProperty Name="ActorUploadedFiles" Relationship="Model1.ActorActorUploadedFiles" FromRole="Actor" ToRole="ActorUploadedFiles" />
+        </EntityType>
+        <EntityType Name="Director">
+          <Key>
+            <PropertyRef Name="IDDirector" />
+          </Key>
+          <Property Name="IDDirector" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" Nullable="false" />
+          <NavigationProperty Name="Movie" Relationship="Model1.DirectorMovie" FromRole="Director" ToRole="Movie" />
+          <NavigationProperty Name="DirectorUploadedFiles" Relationship="Model1.DirectorDirectorUploadedFiles" FromRole="Director" ToRole="DirectorUploadedFiles" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="IDMovie" />
+          </Key>
+          <Property Name="IDMovie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Duration" Type="String" Nullable="false" />
+          <Property Name="Release" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Actor" Relationship="Model1.ActorMovie" FromRole="Movie" ToRole="Actor" />
+          <Property Name="ActorIDActor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Director" Relationship="Model1.DirectorMovie" FromRole="Movie" ToRole="Director" />
+          <Property Name="DirectorIDDirector" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MovieUploadedFiles" Relationship="Model1.MovieMovieUploadedFiles" FromRole="Movie" ToRole="MovieUploadedFiles" />
+        </EntityType>
+        <EntityType Name="ActorUploadedFiles">
+          <Key>
+            <PropertyRef Name="IDActorUploadedFiles" />
+          </Key>
+          <Property Name="IDActorUploadedFiles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <NavigationProperty Name="Actor" Relationship="Model1.ActorActorUploadedFiles" FromRole="ActorUploadedFiles" ToRole="Actor" />
+          <Property Name="ActorIDActor" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DirectorUploadedFiles">
+          <Key>
+            <PropertyRef Name="IDDirectorUploadedFiles" />
+          </Key>
+          <Property Name="IDDirectorUploadedFiles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <NavigationProperty Name="Director" Relationship="Model1.DirectorDirectorUploadedFiles" FromRole="DirectorUploadedFiles" ToRole="Director" />
+          <Property Name="DirectorIDDirector" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieUploadedFiles">
+          <Key>
+            <PropertyRef Name="IDMovieUploadedFiles" />
+          </Key>
+          <Property Name="IDMovieUploadedFiles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <NavigationProperty Name="Movie" Relationship="Model1.MovieMovieUploadedFiles" FromRole="MovieUploadedFiles" ToRole="Movie" />
+          <Property Name="MovieIDMovie" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ActorMovie">
+          <End Type="Model1.Actor" Role="Actor" Multiplicity="1" />
+          <End Type="Model1.Movie" Role="Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="IDActor" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="ActorIDActor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DirectorMovie">
+          <End Type="Model1.Director" Role="Director" Multiplicity="1" />
+          <End Type="Model1.Movie" Role="Movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Director">
+              <PropertyRef Name="IDDirector" />
+            </Principal>
+            <Dependent Role="Movie">
+              <PropertyRef Name="DirectorIDDirector" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ActorActorUploadedFiles">
+          <End Type="Model1.Actor" Role="Actor" Multiplicity="1" />
+          <End Type="Model1.ActorUploadedFiles" Role="ActorUploadedFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="IDActor" />
+            </Principal>
+            <Dependent Role="ActorUploadedFiles">
+              <PropertyRef Name="ActorIDActor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DirectorDirectorUploadedFiles">
+          <End Type="Model1.Director" Role="Director" Multiplicity="1" />
+          <End Type="Model1.DirectorUploadedFiles" Role="DirectorUploadedFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Director">
+              <PropertyRef Name="IDDirector" />
+            </Principal>
+            <Dependent Role="DirectorUploadedFiles">
+              <PropertyRef Name="DirectorIDDirector" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MovieMovieUploadedFiles">
+          <End Type="Model1.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="Model1.MovieUploadedFiles" Role="MovieUploadedFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="IDMovie" />
+            </Principal>
+            <Dependent Role="MovieUploadedFiles">
+              <PropertyRef Name="MovieIDMovie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="ActorSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Actor)">
+        <MappingFragment StoreEntitySet="ActorSet">
+          <ScalarProperty Name="IDActor" ColumnName="IDActor" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DirectorSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Director)">
+        <MappingFragment StoreEntitySet="DirectorSet">
+          <ScalarProperty Name="IDDirector" ColumnName="IDDirector" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovieSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Movie)">
+        <MappingFragment StoreEntitySet="MovieSet">
+          <ScalarProperty Name="IDMovie" ColumnName="IDMovie" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Release" ColumnName="Release" />
+          <ScalarProperty Name="ActorIDActor" ColumnName="ActorIDActor" />
+          <ScalarProperty Name="DirectorIDDirector" ColumnName="DirectorIDDirector" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActorUploadedFilesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ActorUploadedFiles)">
+        <MappingFragment StoreEntitySet="ActorUploadedFilesSet">
+          <ScalarProperty Name="IDActorUploadedFiles" ColumnName="IDActorUploadedFiles" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="ActorIDActor" ColumnName="ActorIDActor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DirectorUploadedFilesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.DirectorUploadedFiles)">
+        <MappingFragment StoreEntitySet="DirectorUploadedFilesSet">
+          <ScalarProperty Name="IDDirectorUploadedFiles" ColumnName="IDDirectorUploadedFiles" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="DirectorIDDirector" ColumnName="DirectorIDDirector" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovieUploadedFilesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.MovieUploadedFiles)">
+        <MappingFragment StoreEntitySet="MovieUploadedFilesSet">
+          <ScalarProperty Name="IDMovieUploadedFiles" ColumnName="IDMovieUploadedFiles" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="MovieIDMovie" ColumnName="MovieIDMovie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

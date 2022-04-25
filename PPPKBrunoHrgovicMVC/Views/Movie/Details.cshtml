@@ -1,0 +1,77 @@
+﻿@model PPPKBrunoHrgovicMVC.Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDMovie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDMovie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Release)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Release)
+        </dd>
+
+        <dt>
+            Director
+        </dt>
+
+        <dd>
+            @Model.Director.Name
+        </dd>
+
+        <dt>
+            Actor
+        </dt>
+
+        <dd>
+            @Model.Actor.Name
+        </dd>
+
+        @foreach (var uploadedFile in Model.MovieUploadedFiles)
+        {
+            <dt>
+                @uploadedFile.Name
+            </dt>
+            <hr>
+            <dd>
+                <img src="~/MovieFiles?id=@uploadedFile.IDMovieUploadedFiles" width="300" height="200" alt="pic" />
+            </dd>
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.IDMovie  }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
